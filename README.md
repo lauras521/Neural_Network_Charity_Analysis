@@ -25,33 +25,33 @@ The dataset has 34299 different investments.
     * Special Consideration
     * Ask Amount
 * Name and EIN were dropped from the data set as they didn't add value to the analysis
-    * We also considered dropping Status from the dataset as an optimization since only 5 of the 34299 data points have a status of 0 and all other data points have a status of 1.  This did not impact model performance and was not saved as one of the 3 optimization cases.   
+    * I also considered dropping Status from the dataset as an optimization since only 5 of the 34299 data points have a status of 0 and all other data points have a status of 1.  This did not impact model performance and was not saved as one of the 3 optimization cases.   
 
 #### Compiling, Training, and Evaluating the Model
-How many neurons, layers, and activation functions did you select for your neural network model, and why?
-Were you able to achieve the target model performance?
-What steps did you take to try and increase model performance?
-
-
-<p align="center">
-  <img src = >
-</p>
-
-Hvplot_table was used to have a user friendly view of the raw data.
+* How many neurons, layers, and activation functions did you select for your neural network model, and why?
+    * Initially neurons and layers were chosen to match the output shape and parameters from the sample code provided (i.e. 80 in the first layer and 30 in the second layer)
+    * Lower numbers were ran as well (i.e. 10 in the first layer and 3 in the second layer) to see if complexity and time could be reduced while accuracy could be maintained.  73.3% accuracy was obtained with 10 and 3 while 73.9% was obtained with 80 and 30.  This different is not significant and either could be considered for ongoing modeling.  80 and 30 was kept to match the started code deliverable.   
 
 <p align="center">
-  <img src = >
+  <img src = https://github.com/lauras521/Neural_Network_Charity_Analysis/blob/58186eb2005c61e03377e6cf423c251e0661f2cc/Resources/ModelSummaryD1D2.PNG>
 </p>
+
+* Were you able to achieve the target model performance?
+    * Target model performance above 75% was not obtained.  The best model plateaued below 75%.
+     
+* What steps did you take to try and increase model performance?
+    * The following 3 optimziations were ran: 
+    
+     1. Outliers were removed from the ASK_AMT data column.  After reviewing this dataset, there are quite a few outliers on the high side that skew the data.  The thought was the model might be giving this column more weight than necessary.  The IQR ranges from 887 - 11,855.  Of the 34,299 donation requests 25,398 of them asked for 5,000.  8,901 other requests asked for more than 5,000.  The 18 largest requests asked totalled 50,671,612,115 and made up 53% of the entire column's sum for all 34,299 requests.  The firm invested $10 billion over the last 20 years and the top 18 requests total over 50 billion.  As a result, it doesn't appear the data is in dollars or there is an error in some of the data.  The removal of the noisy outlier data did not play out as anticipated in model accuracy.  This model ran with a lower accuracy of 55.2%.   
+     2. The second attempt added back in the outliers from ASK_AMT and added a 3rd hidden layer, increased epochs from 50 to 100 and changed the model from relu to tanh.  This model ran to 74.2% accuracy.
+     3. The thrid attempt added additional neurons to hidden layers 1 and 2 and a 3rd hidden layer was added.  This model ran to 74.1% accuracy. 
+
+As a result, no attempts were able to increase model accuracy above 75%.
 
 ### Summary
 
-Summarize the overall results of the deep learning model. Include a recommendation for how a different model could solve this classification problem, and explain your recommendation.
+This deep learing model accurately predicts successful donations ~75% of the time.  Other supervised learning classificaiton models (i.e. logistic regression) could be used for this analysis as you have the necessary input data and desired results.    
 
-
-
-1. dropped status column
-2. added 3rd hidden layer
-3. increased to 100 epocs and updaed to tanh
 
 ## Resources
 [link to Deliverable 1 and 2 code](https://github.com/lauras521/Neural_Network_Charity_Analysis/blob/27e2b58cbfd1b4f75da65297b26a0ac8bbb52564/AlphabetSoupCharity.ipynb)
